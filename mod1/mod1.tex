@@ -1,0 +1,243 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newcommand{\hmwkTitle}{Mod 1}
+\newcommand{\hmwkDueDate}{February 06, 2025}
+\newcommand{\hmwkClass}{Discrete Math}
+\newcommand{\hmwkClassTime}{Section 001}
+\newcommand{\hmwkClassInstructor}{Mark Floryan}
+\newcommand{\hmwkAuthorName}{\textbf{Rushil Umaretiya}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkTitle: Cardinality}}\\
+    \normalsize\vspace{0.1in}
+    \small{\textbf{Due\ on\ \hmwkDueDate}}\\
+    \normalsize\text{Tuesday/Thursday 11:00-12:15, Warner 209}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ - \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName\\\small{frj2ka@virginia.edu}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+\newcommand{\unit}[1]{\section{Unit #1}}
+\newcommand{\problem}[1]{\textbf{\##1}}
+\newcommand{\prob}[1]{\problem{#1}}
+
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\renewcommand{\And}{\wedge}
+\newcommand{\Or}{\vee}
+\newcommand{\Xor}{\oplus}
+\newcommand{\Not}{\neg}
+\newcommand{\Implies}{\rightarrow}
+\newcommand{\Iff}{\leftrightarrow}
+\newcommand{\union}{\cup}
+\newcommand{\intersection}{\cap}
+
+\newcommand{\AllIntegers}{\mathbb{Z}}
+\newcommand{\AllNaturals}{\mathbb{N}}
+\newcommand{\AllRationals}{\mathbb{Q}}
+\newcommand{\AllReals}{\mathbb{R}}
+\newcommand{\AllComplexes}{\mathbb{C}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\problem{1} For each of the following claims, state whether it is true or false and then prove your assertion.
+
+\begin{enumerate}
+    \item All finite sets have an injection to \(\AllNaturals\)
+    
+    \textbf{True.} Let \(A\) be a finite set. Then, \(|A| = n\) for some \(n \in \AllNaturals\). Let \(f: A \to \AllNaturals\) be defined as \(f(a) = n\) for all \(a \in A\). This function is injective because for all \(a, b \in A\), if \(f(a) = f(b)\), then \(n = n\), which implies that \(a = b\). Thus, all finite sets have an injection to \(\AllNaturals\) when we map each element of \(A\) to a unique natural number.
+
+    \item All finite sets have a surjection to \(\AllNaturals\)
+    
+    \textbf{False.} Let \(A\) be a finite set with \(|A| = n\). Then, the maximum number of elements in the image of a function \(f: A \to \AllNaturals\) is \(n\). Suppose there exists a surjection \(f: A \to \AllNaturals\). Then, the image of \(f\) must contain all natural numbers, which is not possible because the image of \(f\) is finite. Thus, all finite sets do not have a surjection to \(\AllNaturals\).
+
+    \item If \(A\) is a countably infinite set (i.e., \(|A| = |\AllNaturals|\)) and \(B\) is a also a countably infinite set (i.e., \(|B| = |\AllNaturals|\)), then \(A \union B\) is also countable.
+    
+    \textbf{True.} If we assign the elements of \(A\) to the even values of \(\AllNaturals\) and the elements of \(B\) to the odd values of \(\AllNaturals\), then we can create a bijection between \(A \union B\) and \(\AllNaturals\) as each element of \(A \union B\) is mapped to a unique element in \(\AllNaturals\). Thus, \(A \union B\) is countable.
+
+    \item If \(A\) is countably infinite and \(B\) is uncountably infinite, then \(A \union B\) is countable.
+    
+    \textbf{False.} Note that \(B \subseteq A \union B\). Since \(B\) is uncountably infinite, then \(A \union B\) must also be uncountably infinite because the union of a countably infinite set and an uncountably infinite set is uncountably infinite. Thus, \(A \union B\) is uncountable.
+
+    \item If \(A\) is countably infinite and \(B\) is uncountably infinite, then \(A \cap B\) is countable.
+    
+    \textbf{True.} Since \(A\) is countably infinite, we can list the elements of \(A\) as \(a_1, a_2, a_3, \ldots\). Since \(B\) is uncountably infinite, there must be at least one element in \(B\) that is not in \(A\). Thus, \(A \cap B\) is finite or countably infinite. Since \(A \cap B\) is a subset of \(A\), it must be countable.
+\end{enumerate}
+
+\pagebreak
+
+\prob{2} Consider the formal descriptions of each set below. For each, write a short informal English
+description of each set.
+
+\begin{enumerate}
+    \item \(\{n|\exists_{m\in\AllNaturals}:n=2m\}\)
+    
+    Set of all even natural numbers (0, 2, 4, ...).
+
+    \item \(\{n|\exists_{m\in\AllNaturals}:n=2m\wedge\exists_{k\in\AllNaturals}:n=3k\}\)
+    
+    Set of all natural numbers that are divisible by both 2 and 3 (6, 12, 18, ...) (i.e. divisible by 6).
+
+    \item \(\{w|w\in\{0,1\}^*\wedge w=w^R\}\)
+    
+    Set of all palindromes over the alphabet \(\{0, 1\}\) (0, 1, 00, 11, 000, 010, 101, 111, ...).
+    
+    \item \(\{n|n\in\AllIntegers\wedge n=n+1\}\)
+
+    The empty set (there are no such integers \(n\) such that \(n=n+1\)).
+
+\end{enumerate}
+
+\pagebreak
+
+\prob{3} Consider a square grid with length and width n. The bottom left corner is considered position (0, 0) and the upper right corner is position (n, n) (*Note that the first item in the tuple is the square along the horizontal axis and the second element is the index along the vertical axis). You can see an example grid below.\\
+\\
+Our goal is to find all the unique ways a robot starting at cell (0, 0) can reach cell (n, n) by only moving up, down, left, right on the grid on each move. We would like you to do two things:
+
+\begin{enumerate}
+    \item In your own words, argue why the given set (the set of possible paths to the goal) is
+infinite (as opposed to finite).
+
+    Given that there are no bounds on our path length, the robot can move in cycles or loops without ever reaching the goal. For example, the robot could just move up and then down repeatedly for an infinite amount of steps, creating an infinite number of paths that take an infinite number of steps to reach the goal. Thus, the set of possible paths to the goal is infinite.
+
+    Another way to say this, is given a finite set of paths, we can always add an extra loop in order to create an additional path. This can be done infinitely many times, thus the set of possible paths is infinite.
+
+    \item Show that the set of unique paths the robot can take to reach position (n, n) is countably infinite.
+    
+    If we place each possible movement in a list, we can create a bijection between the set of unique paths the robot can take to reach position (n, n) and the set of natural numbers. For example, we can list the movements as follows:
+
+    \begin{align*}
+        \Sigma &= \{\text{up, down, left, right}\},\\
+        \Sigma^* &= \{\text{all fininite paths using the moves up, down, left, right}\}
+    \end{align*}
+
+    Since \(\Sigma\) is a finite set, we know that \(\Sigma^*\) is countably infinite as we can create a bijection between the known countably infinite set \(\{0,1\}^*\) and \(\Sigma^*\).
+    
+    The set of valid paths from (0,0) to \((n,n)\) is a subset of \(\Sigma^*\), and a subset of a countably infinite set is either fininite or countably infinite. Since the set of valid paths is infinite, it must be countably infinite.
+
+\end{enumerate}
+
+\pagebreak
+
+\prob{4} Prove \(F=\mathcal{P}(\AllNaturals)\) is uncountable.
+
+\begin{proof}
+    \textbf{Cantor's Diagnolization Argument.} Assuming that \(\mathcal{P}(\AllNaturals)\) is countable, then it's elements (subsets of \(\AllNaturals\)) can be listed in a sequence \((S_1, S_2, S_3, \ldots)\). We can represent each of these elements as an infinite binary sequence, where the bit in the bitstring is 1 if the number is in the set and 0 if the number is not in the set. For example, if \(S_1 = \{1, 3, 5\}\), then the binary representation of \(S_1\) is \(1010100000\ldots\)\\
+
+    We can then construct a table of the binary representations of \(S_1, S_2, S_3, \ldots\), and define a new subset \(D \subseteq \AllNaturals\) by flipping each bit on the diagonal of the table (i.e. the first bit of \(S_1\), the second bit of \(S_2\), etc.). For example, if the diagonal of the table is \(1011\ldots\), then the binary representation of \(D\) is \(0100\ldots\).\\
+
+    Since for every row we have a flipped bit, we can show that this new subset \(D\) is not in the list of subsets of binary representations of \(\AllNaturals\), which is a contradiction. Thus, \(\mathcal{P}(\AllNaturals)\) is uncountable.
+
+\end{proof}
+
+\pagebreak
+
+\prob{5} Suppose I build a new computing machine that can be programmed to recognize a lot of
+different functions! It is called the Flogrammable Device. In order to program this machine,
+you can type out your program on a tape, but this tape can only hold ten characters. Each
+character is from the alphabet \(\Sigma = \{a, b, c, d, 0, 1\}\) and any combination of these 10 characters is a valid program. More precisely, a program is a String \(P = p_1,p_2,\ldots, p_{10} | \forall_i p_i \in \Sigma\). You
+CANNOT have fewer than 10 characters or the code will not compile.\\
+
+Now suppose that you read online that somehow, there are 100,000,000 important functions
+that need to be computed by the Flogrammable Device for it to cover all important functionality. Can we program each of the 100,000,000 functions on this machine? How do you know
+or not?\\
+
+Since each program is a string of 10 characters, there are \(6^{10} = 60,466,176\) possible programs that can be written on the Flogrammable Device. Since there are only 60,466,176 possible programs that can be written on the device, we cannot program all 100,000,000 functions on the device. Thus, we cannot program each of the 100,000,000 functions on the Flogrammable Device.
+
+\end{document}
