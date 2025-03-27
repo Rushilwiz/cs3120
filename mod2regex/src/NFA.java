@@ -158,12 +158,28 @@ public class NFA{
 		/* TODO: IMPLEMENT THIS METHOD */
 		/* --------------------------------- */
 
+		// first handle epsilon transitions from start state
+		currentStates = epsilonTransition(currentStates);
 
+		for (int i = 0; i < input.length(); i++) {
+			// translate char
+			char c = translateInput(input.charAt(i));
 
+			// perform transitions
+			currentStates = transition(currentStates, c);
 
-		/* --------------------------------- */
+			// if no states left, we'll reject the string
+			if (currentStates.isEmpty()) {
+				return false;
+			}
 
-		return false;
+			// handle epsilon transitions
+			currentStates = epsilonTransition(currentStates);
+		}
+
+		// check if any final states are in the current states
+		// finally putting the streams from dsa2 to use lol
+		return currentStates.stream().anyMatch(state -> finalStates.contains(state));
 	}
 
 

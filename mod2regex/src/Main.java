@@ -51,6 +51,11 @@ public class Main{
 
 		/* Case 1 - Base Case: exp is empty string, nothing to do */
 
+		if (exp.length() == 0) {
+			NFA nfa = new NFA();
+			nfa.addFinalState(nfa.getStartState());
+			return nfa;
+		}
 
 		/* Case 2 - Look for U operator (will never be inside parens so don't need to worry about that) */
 		
@@ -64,24 +69,60 @@ public class Main{
 			
 			return the unioned NFA
 		*/
+		
+		if (exp.contains("U")) {
+			// split the expression by U
+			String[] parts = exp.split("U");
 
+			// build NFA for the first part
+			NFA result = buildNFA(parts[0]);
 
+			// union additional parts with result
+			for (int i = 1; i < parts.length; i++) {
+				NFA nextNFA = buildNFA(parts[i]);
+				result.union(nextNFA);
+			}
 
+			return result;
+		}
+		
 		/* Case 3 - First character of exp is 'a' or 'd' */
 
 		/*
 		If first character is 'a' or 'd'
 			Create an NFA object that has start state and single 'a' / 'd'
 			transition to a final state
-
+		
 			If the character after the 'a' or 'd' is the * operator
 				call star() on the nfa you just built
 				concatenate() with the NFA for rest of the expression (after the star)
 			Else if the character after 'a' or 'd' is not the * operator
 				just concatenate() with the NFA for rest of the expression
-
+		
 			Return the NFA that was built
 		*/
+		
+		if (exp.charAt(0) == 'a' || exp.charAt(0) == 'd') {
+			NFA nfa = new NFA();
+			
+			int startState = nfa.getStartState();
+			int finalState = nfa.addState();
+			nfa.addFinalState(finalState);
+			nfa.addTransition(startState, exp.charAt(0), finalState);
+
+			if (exp.length() > 1) {
+				if (exp.charAt(1) == '*') {
+					nfa.star();
+					if (exp.length() > 2) {
+						nfa.concatenate(buildNFA(exp.substring(2)));
+					}
+				} else {
+					nfa.concatenate(buildNFA(exp.substring(1)));
+				}
+			}
+
+			return nfa;
+		}
 
 		
 
@@ -99,6 +140,30 @@ public class Main{
 		*/
 
 		/* --------------------------------------------- */
+
+		if (exp.charAt(0) == '(') {
+			int parenCount = 1;
+			int closeIndex = 1;
+			while (parenCount > 0 && closeIndex < exp.length()) {
+				if (exp.charAt(closeIndex) == '(') {
+					parenCount++;
+				} else if (exp.charAt(closeIndex) == ')') {
+					parenCount--;
+				}
+
+				closeIndex++;
+			}
+				
+			NFA nfa = buildNFA(exp.substring(1, closeIndex - 1));
+
+			nfa.star();
+
+			if (closeIndex < exp.length() - 1) {
+				nfa.concatenate(buildNFA(exp.substring(closeIndex + 1)));
+			}
+
+			return nfa;
+		}
 
 		/* Should never happen...but here so code compiles */
 		return null;
