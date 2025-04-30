@@ -1,0 +1,238 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newcommand{\hmwkTitle}{Mod 5}
+\newcommand{\hmwkDueDate}{April 29, 2025}
+\newcommand{\hmwkClass}{Discrete Math}
+\newcommand{\hmwkClassTime}{Section 001}
+\newcommand{\hmwkClassInstructor}{Mark Floryan}
+\newcommand{\hmwkAuthorName}{\textbf{Rushil Umaretiya, Lola Quraishi}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkTitle}}\\
+    \normalsize\vspace{0.1in}
+    \small{\textbf{Due\ on\ \hmwkDueDate}}\\
+    \normalsize\text{Tuesday/Thursday 11:00-12:15, Warner 209}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ - \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName\\\small{frj2ka@virginia.edu, uev7gx@virginia.edu}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+\newcommand{\unit}[1]{\section{Unit #1}}
+\newcommand{\problem}[1]{\textbf{\##1}}
+\newcommand{\prob}[1]{\problem{#1}}
+
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\renewcommand{\And}{\wedge}
+\newcommand{\Or}{\vee}
+\newcommand{\Xor}{\oplus}
+\newcommand{\Not}{\neg}
+\newcommand{\Implies}{\rightarrow}
+\newcommand{\Iff}{\leftrightarrow}
+\newcommand{\union}{\cup}
+\newcommand{\intersection}{\cap}
+
+\newcommand{\AllIntegers}{\mathbb{Z}}
+\newcommand{\AllNaturals}{\mathbb{N}}
+\newcommand{\AllRationals}{\mathbb{Q}}
+\newcommand{\AllReals}{\mathbb{R}}
+\newcommand{\AllComplexes}{\mathbb{C}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\problem{1} Show that if $P = NP$, then every language $A \in P$, except $A = \emptyset$ and $A = \Sigma^*$ is \emph{NP-Complete}.\\
+
+In order to show that A is NP-Complete, we need to show that A is in NP and that every language in NP can be reduced to A in polynomial time.
+
+\begin{itemize}
+    \item Show $A \in NP$
+    
+    This step is trivial, as if $A \in P$, then $A \in NP$.
+
+    \item Show that every language in NP can be reduced to A.
+    
+    Given the problem, we know,
+    \begin{align}
+        A \neq \emptyset \implies \exists x \in A \\
+        A \neq \Sigma^* \implies \exists y \notin A
+    \end{align}
+
+    Since we know that there are strings that are and are not in A, we can reduce the language to 3-SAT, a known NP-Complete problem.
+
+    $$f(\phi) = \begin{cases}
+        w & \text{if } \phi \text{ is satisfiable} \\
+        y & \text{if } \phi \text{ is not satisfiable}
+    \end{cases}$$
+
+    If $P=NP$, then we can solve 3-SAT in polynomial time. We can use the same algorithm to solve A in polynomial time. Thus, we can reduce every language in NP to A in polynomial time. Since 3-SAT is NP-Hard, then we know that A will also be NP-Hard.\\
+    
+    Thus, we have shown that A is NP-Complete.
+\end{itemize}
+
+\pagebreak
+
+\problem{2} \emph{PSPACE} is the complexity class containing all problems that can be solved using a \emph{Deterministic Turing Machine} that uses at most a polynomial amount of additional space (on the tape). Prove that $P \subseteq \textit{PSPACE}$. (\emph{Hint: Think about a generic problem in P, and the DTM that decides it. Try to use more than a polynomial space with this machine given the allotted time.})\\
+
+Let A be a language in P. By definition, there exists a DTM M that decides A in polynomial time, let's say this polynomial time ie $O(n^k)$ for some constant k.\\
+
+Since M runs in $O(n^k)$ time, it can execute at most $n^k$ steps before halting. In each step, M can move at most one space to the left or right on the tape. Therefore, by the time taht M halts, it can only have written on the tape at most $n^k$ symbols.\\
+
+The space complexity of M is then bounded by $n^k$ which is polynomial in the size of the input.\\
+
+Since A is decidable by M, and M uses at most $n^k$ space, we can conclude that $A \subseteq PSPACE$.\\
+
+\pagebreak
+
+\problem{3} Recall the \emph{knapsack problem}: Given a list of item values $V = \{v_1,v_2,...,v_n\}$, their respective weights $W = \{w_1,w_2,...,w_n\}$, a target value $k \in \mathbb{N}$, and a knapsack capacity $C \in \mathbb{N}$, does there exist a subset of items such that the sum of the values of the items is at least $k$ and the sum of the weight of the items is less than or equal to $C$. In other words, choose items $I$ such that $\sum_{i \in I}(v_i) \geq k$ and $\sum_{i \in I}(w_i) \leq C$. Show that the \emph{knapsack problem} is NP-Complete. You can use any other known NP-Complete problem for your reduction (you might want to look up other NP-Complete problems for this, but you don't have to!).\\
+
+In order to show that the \emph{knapsack problem}, K is NP-Complete, we need to show that it is in NP and that it is NP-Hard.\\
+
+\begin{itemize}
+    \item Show that $K \in NP$\\
+
+    Given a solution to K, we can verify in polynomial time that,
+    \begin{align}
+        \sum_{i \in I}(v_i) &\geq k \\
+        \sum_{i \in I}(w_i) &\leq C
+    \end{align}
+
+    Since we are able to verify the problem in polynomial time, we can conclude that K is in NP.\\
+
+    \item Show that $K$ is NP-Hard\\
+    
+    Let's use the Subset Sum problem for reduction, which is known to be NP-Complete.
+
+    The Subset Sum problem is defined as follows: Given a list of integers $S = \{s_1,s_2,...,s_n\}$ and a target integer $k$, does there exist a subset of integers in S such that the sum of the integers in the subset is equal to k?\\
+
+    Given a Subset Sum instance $(S,t)$ where $S = \{s_1,s_2,...,s_n\}$ and $t$ is our target sum, we can construct an instance of the knapsack problem as follows:
+    \begin{itemize}
+        \item Set the values of the items to be equal to their weights, i.e., $V = W = S$.
+        \item Set the target value $k = t$
+        \item Set the knapsack capacity $C = t$
+    \end{itemize}
+
+    Now lets show that these problems are equivalent.\\
+
+    Given a solution to the Subset 
+
+\end{itemize}
+
+\pagebreak
+
+\problem{4}
+
+You are working for \emph{Shoogle} (A data company that definitely does not exist) and you are given the following task from your boss: \emph{Shoogle} is interested in investing in their employees by offering a large amount of professional development. They have collected a series of \emph{workshops} that each cover a subset of \emph{topics}. For example, workshop 1 might cover machine learning and databases, workshop 2 might cover machine learning and data mining, and workshop 3 might cover advanced data structures (note that each workshop can cover multiple topics and there can be overlap across workshops). In addition, \emph{Shoogle} wants to make sure that over the course of the professional development workshops, at least one topic in each sub-area of interest is represented. For example, they might want to make sure there is at least one AI workshop (machine learning or reinforcement learning or neural networks, etc.), at least one systems workshop (databases or cloud computing), etc.\\
+\\
+So...the problem is this: Given the availability of the professional development workshop, what topics each covers, and which areas need to be covered, can you devise a schedule over multiple weeks that ensures that at least one topic in every area is covered by at least one workshop?\\
+\\
+Let's formalize this a bit: The input contains multiple items:
+
+\begin{itemize}
+    \item $T$: A list of individual topics that can be covered (e.g., machine learning).
+    \item $W=\{w_1,w_2,...,w_m | w_i \subseteq T\}$: A list of workshops, each of which is a subset of the topics $T$ that will be covered in that workshop. There are $m$ workshops total.
+    
+    \item $S=\{s_1,s_2,...,s_n | s_i \subseteq W\}$: The schedule availability for each week. Each $s_i$ is the subset of workshops that can be scheduled in week $i$. There are $n$ weeks. You can only schedule ONE workshop per week.
+    \item $A= \{a_1,a_2,...,a_p | a_i \subseteq T\}$: The subject areas that need to be covered. Each area is a list of Topics in that area.
+\end{itemize}
+
+You want to output Yes if there is some schedule of workshops over the $n$ weeks such that every area has at least one topic in $T$ that is covered in at least one workshop.\\
+\\
+This problem is \emph{NP-Complete}. Prove it! For your reduction, use \emph{3-SAT}.
+
+\end{document}
